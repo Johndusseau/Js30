@@ -1,67 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <title>Mouse Shadow</title>
+  <title>JS Reference VS Copy</title>
 </head>
+
 <body>
 
-  <div class="hero">
-    <h1 contenteditable>🔥WOAH!</h1>
-  </div>
+  <script>
+    // start with strings, numbers and booleans
 
-  <style>
-  html {
-    color:black;
-    font-family: sans-serif;
-  }
+    // Let's say we have an array
+    const players = ['Wes', 'Sarah', 'Ryan', 'Poppy'];
 
-  body {
-    margin: 0;
-  }
+    // and we want to make a copy of it.
 
-  .hero {
-    min-height: 100vh;
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    color:black;
-  }
+    // You might think we can just do something like this:
 
+    // however what happens when we update that array?
 
-  h1 {
-    text-shadow: 10px 10px 0 rgba(0,0,0,1);
-    font-size: 100px;
-  }
-  </style>
+    // now here is the problem!
 
-<script>
-  const hero = document.querySelector('.hero');
-  const text = hero.querySelector('h1');
-  const walk = 500; // 500px
+    // oh no - we have edited the original array too!
 
-  function shadow(e) {
-    const { offsetWidth: width, offsetHeight: height } = hero;
-    let { offsetX: x, offsetY: y } = e;
+    // Why? It's because that is an array reference, not an array copy. They both point to the same array!
 
-    if (this !== e.target) {
-      x = x + e.target.offsetLeft;
-      y = y + e.target.offsetTop;
-    }
+    // So, how do we fix this? We take a copy instead!
 
-    const xWalk = Math.round((x / width * walk) - (walk / 2));
-    const yWalk = Math.round((y / height * walk) - (walk / 2));
+    // one way
 
-    text.style.textShadow = `
-      ${xWalk}px ${yWalk}px 0 rgba(255,0,255,0.7),
-      ${xWalk * -1}px ${yWalk}px 0 rgba(0,255,255,0.7),
-      ${yWalk}px ${xWalk * -1}px 0 rgba(0,255,0,0.7),
-      ${yWalk * -1}px ${xWalk}px 0 rgba(0,0,255,0.7)
-    `;
+    // or create a new array and concat the old one in
 
-  }
+    // or use the new ES6 Spread
 
-  hero.addEventListener('mousemove', shadow);
-</script>
+    // now when we update it, the original one isn't changed
+
+    // The same thing goes for objects, let's say we have a person object
+
+    // with Objects
+    const person = {
+      name: 'Wes Bos',
+      age: 80
+    };
+
+    // and think we make a copy:
+
+    // how do we take a copy instead?
+
+    // We will hopefully soon see the object ...spread
+
+    // Things to note - this is only 1 level deep - both for Arrays and Objects. lodash has a cloneDeep method, but you should think twice before using it.
+
+  </script>
+
 </body>
+
 </html>
